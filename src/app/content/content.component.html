@@ -1,0 +1,157 @@
+<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark default-color ie-nav" [containerInside]="false">
+  <logo>
+    <a class="logo navbar-brand" href="#">
+      <strong>EMS 1669 sisaket</strong>
+    </a>
+  </logo>
+  <links>
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item  waves-light" mdbWavesEffect>
+        <a class="nav-link">Home
+          <span class="sr-only">(current)</span>
+        </a>
+      </li>
+      <li class="nav-item active  waves-light" mdbWavesEffect>
+        <a class="nav-link btn-lg" [ngClass]="btnColor">{{ onlineStatus }}</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav nav-flex-icons">
+
+      <li class="nav-item waves-light" mdbWavesEffect>
+
+        <!-- <a class="nav-link"><i class="fa fa-unlock-alt" aria-hidden="true"></i></a> -->
+
+        <button type="button" class="btn btn-sm btn-primary waves-light" data-toggle="modal" data-target="#login" (click)="demoBasic.show()"
+          mdbWavesEffect>
+          <img src="{{ usericonLogin }}" width="40px" height="40px"> {{ userNameLogin }}
+          <i class="fa fa-unlock-alt" aria-hidden="true"></i>
+        </button>
+      </li>
+    </ul>
+  </links>
+</mdb-navbar>
+
+
+
+
+<div class="card">
+  <div class="card-body">
+    <h4 class="text-left">{{myDate | date:'EEEE , d-M-yyyy'}}</h4>
+    <h1 class="text-right "> {{ myDate | date : 'HH:mm:ss a' }}</h1>
+    <br>
+    <p>
+      <span class="initcap"> {{ (items | async)?.length + 1 }} </span>
+    </p>
+  </div>
+</div>
+
+<div class="card" style="padding-left:20px;">
+  <div class="row">
+
+    <div class="col-md-12">
+      <div class="md-form input-group">
+        <div class="input-group-btn">
+          <button class="btn btn-primary waves-light" type="button" mdbWavesEffect>ป้อนหน่วย</button>
+        </div>
+        <input type="text" [(ngModel)]="team" name="team" placeholder="ระบุ...">
+      </div>
+
+    </div>
+
+
+
+
+    <div class="col-md-12">
+
+      <div class="md-form input-group">
+        <button class="btn btn-primary waves-light" type="button" mdbWavesEffect>เลือกเหตุการณ์</button>
+        <select [(ngModel)]="selectedValue">
+          <option selected value="" class="dropdown-item"> ---กรุณาเลือกรายการ---</option>
+          <option *ngFor="let scene of scenes" [value]="scene" class="dropdown-item">{{ scene }}</option>
+        </select>
+      </div>
+
+    </div>
+  </div>
+
+
+  <div class="row" style="padding-top: 15px">
+
+    <div class="col-md-7">
+      <button type="button" [disabled]="!navigator_check" class="btn btn-lg btn-danger waves-light  btn-block" mdbWavesEffect (click)="addQueue()">
+        <i class="fa fa-plus-square fa-5x"></i>
+        <p> </p>เพิ่มลำดับ
+      </button>
+    </div>
+
+
+    <div class="col-md-3">
+      <div class="btn-group">
+        <button type="button" class="btn btn-default waves-light " mdbWavesEffect disabled>
+          <i class="fa fa-fast-backward" aria-hidden="true"></i>
+        </button>
+        <p style="padding-top: 10px; padding-right: 5px; padding-left: 5px ">
+          <span class="initcap2"> {{ (items | async)?.length + 1 }} </span>
+        </p>
+        <button type="button" class="btn btn-info waves-light " mdbWavesEffect disabled>
+          <i class="fa fa-fast-forward" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="col-md-2">
+    </div>
+
+
+
+  </div>
+
+
+</div>
+
+
+<div mdbModal #demoBasic="mdb-modal" class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <!--Modal: Avatar-->
+  <div class="modal-dialog modal-sm cascading-modal modal-avatar" role="document">
+    <!--Content-->
+    <div class="modal-content">
+
+      <!--Header-->
+      <div class="modal-header">
+        <img src="{{ userAvatar }}" class="rounded-circle img-responsive">
+      </div>
+      <!--Body-->
+      <div class="modal-body text-center mb-1">
+        <div class="btn-group" dropdown>
+          <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle waves-light" mdbWavesEffect>
+            คุณ
+          </button>
+          <select [ngModel]="selectedUser" (ngModelChange)="onChange($event)">
+            <option [ngValue]="user" *ngFor="let user of users">{{ user.name}}</option>
+          </select>
+        </div>
+        <div class="text-center" style="padding-top: 15px">
+          <button class="btn btn-cyan mt-1 waves-effect waves-light" (click)="demoBasic.hide()" (click)="onLogin()">{{loginLabel}}
+            <i class="fa fa-sign-in ml-1"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+  <!--/Modal: Avatar-->
+</div>
+
+<!-- <p>Date: <input type="text" id="datepicker" name="datepicker" [(ngModel)]="datepick" class="form-control" (change)="dataChanged($event)"></p> -->
+<!-- <p>Date: <input mdbInputDirective type="text" id="datepicker" name="datepick" (ngModelChange)="date($event)" -->
+<!-- [(ngModel)]="datepick" class="form-control"></p> -->
+<!-- <input id="datepicker" type="text" [(ngModel)]="datepick" name="datepick" placeholder="ระบุ..."> -->
+
+
+<button class="btn btn-cyan mt-1 waves-effect waves-light" (click)="valueChange()">date click</button>
+
+
+<input id="datepicker" type="text" [(ngModel)]="datepick" name="datepick" placeholder="ระบุ..."  (blur)="datepick = $event.target.value">
+<p>Look at me! {{datepick}}</p>
+

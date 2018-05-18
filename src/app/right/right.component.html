@@ -1,0 +1,89 @@
+<table class="table  table-striped">
+    <thead class=" lighten-4">
+      <tr >
+        <th>#</th>
+        <th>หน่วย</th>
+        <th>เหตุการณ์</th>
+        <th>เวลา</th>
+        <th>         
+          <a class="blue-text"><i class="fa fa-user"></i></a>
+        </th>
+        <th>Actions</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of items | async | reverse ; let i = index" >
+        <th scope="row"><b>{{ item.number }}</b></th>
+        <td>{{ item.team }}</td>
+        <td>{{ item.scene }}</td>
+        <td>{{ item.timestamp | date : 'HH:mm' }}</td>
+        <td>@{{ item.user }}</td>
+        <td>
+            <a class="fa fa-server blue-text" aria-hidden="true"(click)="onManager(item)" (click)="form.show()"></a>
+      </td>
+      </tr>
+     
+    </tbody>
+  </table>
+
+
+
+<!--Modal: Manager form-->
+<div mdbModal #form="mdb-modal" class="modal fade" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog cascading-modal" role="document">
+        <!--Content-->
+        <div class="modal-content">
+
+            <!--Header-->
+            <div class="modal-header light-blue darken-3 white-text">
+                <h4 class="title"><i class="fa fa-pencil"></i> จัดการปฏิบัติการ ลำดับ {{ item.number}}</h4>
+                <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close" (click)="form.hide()">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <!--Body-->
+            <div class="modal-body mb-0">
+                <h5 class="mt-1 mb-2"> {{ item.timestamp | date : 'full' }}</h5>
+                <div class="md-form form-sm">
+                    <i class="fa fa-tasks prefix"></i>
+                    <input mdbInputDirective type="number" id="form19" class="form-control" disabled >
+                    <label for="form19">ลำดับ {{ item.number}} </label>
+                </div>
+
+                <div class="md-form form-sm">
+                    <i class="fa fa-car prefix"></i>
+                    <input mdbInputDirective type="text" id="form20" class="form-control" [(ngModel)]="item.team">
+                    <label for="form20">หน่วย </label>
+                </div>
+
+                <div class="md-form form-sm">
+                    <i class="fa fa-heart prefix"></i>
+                    <input mdbInputDirective type="text" id="form21" class="form-control" [(ngModel)]="item.scene">
+                    <label for="form21">เหตุการณ์ </label>
+                </div>
+                <div class="md-form form-sm">
+                    <i class="fa fa-user prefix"></i>
+                    <input mdbInputDirective type="text" id="form22" class="form-control" disabled [(ngModel)]="item.user">
+                    <label for="form22">Admin </label>
+                </div>
+
+                <div class="md-form form-sm">
+                    <i class="fa fa-pencil prefix"></i>
+                    <textarea mdbInputDirective type="text" id="form8" class="md-textarea mb-0" [(ngModel)]="item.note"></textarea>
+                    <label for="form8">Note </label>
+                </div>
+
+                <div class="text-center mt-1-half">
+                    <button class="btn btn-blue accent-3 mb-2 waves-light" mdbWavesEffect (click)="form.hide()">Edit/Save <i class="fa fa-seve ml-1" ></i></button>
+                    <button class="btn btn-blue-grey lighten-5 mb-2 waves-light" mdbWavesEffect (click)="form.hide()">Cancel <a class="red-text"><i class="fa fa-trash"></i></a></button>
+                </div>
+               
+            </div>
+        </div>
+        <!--/.Content-->
+    </div>
+</div>
+<!--Modal: Contact form-->
+
+
